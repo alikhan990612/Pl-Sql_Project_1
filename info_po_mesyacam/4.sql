@@ -6,22 +6,22 @@ begin
 	if 
   	:b4.v_l_sh_4 is null 
   then
-    message('������� ������� ����');
-    message('������� ������� ����');
+    message('Введите лицевой счет');
+    message('Введите лицевой счет');
     raise form_trigger_failure; 
   end if;
 	select user into user_name from dual;
-  message('���� ������������...',NO_ACKNOWLEDGE);
+  message('Идет формирование...',NO_ACKNOWLEDGE);
   
   SET_APPLICATION_PROPERTY(CURSOR_STYLE,'BUSY');
   
   if
     get_const(102)is not null
   then
-     -- ������� ��������� ����� ���������. ����� ����� �� ��������� ������� ����� ������������� �����.
-     -- get_const(102,1) ��� ���� ����� ����������. ���� ����� ���������� � �������� ��������� ��������� �� �������. ����� ����� ����������� �����
+     -- Передаю параметры через программу. После этого на программе джаспер будут формироваться отчет.
+     -- get_const(102,1) это айпи адрес компьютера. Айпи адрес запустится в браузере передавая параметры на джаспер. После этого формируется отчет
 
-    a_call:='start "" "'||get_const(102,1)||'INFO_PO_MESYACAM_L_SH&_repFormat=pdf&_dataSource='||get_const(102,2)
+    a_call:='start "" "'||akbulak.get_const(102,1)||'akbulak/INFO_PO_MESYACAM_L_SH&_repFormat=pdf&_dataSource='||get_const(102,2)
             ||'&P_DAT_N='||to_char(:b4.v_dat_n_4, 'dd.mm.rrrr')
             ||'&P_DAT_K='||to_char(last_day(:b4.v_dat_k_4)+1, 'dd.mm.rrrr')
             ||'&P_L_SH='||to_char(:b4.v_l_sh_4)
@@ -30,11 +30,11 @@ begin
             
     host(a_call, NO_SCREEN);
     
-    message('������������ ���������. ������ ������...');
+    message('Формирование выполнено. Запуск отчета...');
      
   else
-    message('��� ���������� �  Jasper �������!');
-    message('��� ���������� �  Jasper �������!');
+    message('Нет интеграции с  Jasper отчетом!');
+    message('Нет интеграции с  Jasper отчетом!');
     raise form_trigger_failure;
   end if;
   
