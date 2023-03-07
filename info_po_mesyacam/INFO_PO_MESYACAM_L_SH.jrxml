@@ -37,7 +37,7 @@
 from table(akbulak.jasper.jasper_table(
 '
 begin
-AKBULAK.INFO_PO_MESYACAM_L_SH(to_date('''||$P{P_DAT_N}||''',''dd.mm.rrrr''),to_date('''||$P{P_DAT_K}||''',''dd.mm.rrrr''),to_number('''||$P{P_L_SH}||'''),'''||$P{P_USER_NAME}||''');
+INFO_PO_MESYACAM_L_SH(to_date('''||$P{P_DAT_N}||''',''dd.mm.rrrr''),to_date('''||$P{P_DAT_K}||''',''dd.mm.rrrr''),to_number('''||$P{P_L_SH}||'''),'''||$P{P_USER_NAME}||''');
 end;
 ',
 '
@@ -77,7 +77,7 @@ select
    MESYAC,
    DAT_N,
    L_SH
-from AKBULAK.WG_INFO_PO_MESYACAM_L_SH
+from WG_INFO_PO_MESYACAM_L_SH
 where MESYAC is not null
 order by DAT_N
 ) a
@@ -87,7 +87,7 @@ Select
   L_SH,
   NA_NACHALO_ALL  TEK_NACHALO_ALL,
   NA_KONEC_ALL  TEK_KONEC_ALL
-from AKBULAK.WG_INFO_PO_MESYACAM_L_SH
+from WG_INFO_PO_MESYACAM_L_SH
 where mesyac is null
 ) b on b.L_SH = a.L_SH
 order by DAT_N1
